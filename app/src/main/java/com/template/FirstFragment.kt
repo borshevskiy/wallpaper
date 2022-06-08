@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.template.databinding.FragmentFirstBinding
@@ -21,11 +22,16 @@ class FirstFragment : Fragment() {
     ): View {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         setupRecyclerView()
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                BackPressedDialog(resources.assets.list("wallpapers")!!.toList().shuffled()[0]).show(parentFragmentManager, "dialog")
+            }
+        })
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mAdapter.wallPapers = requireActivity().assets.list("wallpapers")!!.toList()
+        mAdapter.wallPapers = resources.assets.list("wallpapers")!!.toList()
         super.onViewCreated(view, savedInstanceState)
     }
 

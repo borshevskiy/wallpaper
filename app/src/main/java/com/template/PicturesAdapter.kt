@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.template.databinding.ImageLayoutBinding
 
@@ -28,9 +29,14 @@ class PicturesAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: PicViewHolder, position: Int) {
         val image = wallPapers[position]
-        holder.binding.imageView.setImageDrawable(
-            Drawable.createFromStream(context.assets.open("wallpapers/$image"), null)!!
-        )
+        with(holder.binding) {
+            imageView.setImageDrawable(
+                Drawable.createFromStream(context.assets.open("wallpapers/$image"), null)!!
+            )
+            root.setOnClickListener {
+                root.findNavController().navigate(FirstFragmentDirections.actionFirstFragmentToSecondFragment(image))
+            }
+        }
     }
 
     override fun getItemCount() = wallPapers.size
