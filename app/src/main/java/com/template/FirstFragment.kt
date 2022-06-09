@@ -1,7 +1,9 @@
 package com.template
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
@@ -27,6 +29,10 @@ class FirstFragment : Fragment() {
                 BackPressedDialog(resources.assets.list("wallpapers")!!.toList().shuffled()[0]).show(parentFragmentManager, "dialog")
             }
         })
+        binding.layout.setOnTouchListener { _, event ->
+            Log.d("TEST", "${event?.pointerCount}")
+            true
+        }
         return binding.root
     }
 
