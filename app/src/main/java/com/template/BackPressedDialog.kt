@@ -15,7 +15,7 @@ class BackPressedDialog(private val image: String): DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = RandomWallpaperLayoutBinding.inflate(LayoutInflater.from(context))
-        val builder = AlertDialog.Builder(requireActivity()).setTitle("Recommended wallpaper")
+        val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
         with(binding) {
             imageView.setImageDrawable(Drawable.createFromStream(resources.assets.open("wallpapers/$image"), null)!!)
