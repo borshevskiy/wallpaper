@@ -1,5 +1,6 @@
 package com.template
 
+import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -27,6 +28,7 @@ class SecondFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
             imageName.text = if (args.wallpaper.contains(NO_NAME)) getString(R.string.app_name) else args.wallpaper.substring(0,args.wallpaper.indexOf("."))
@@ -35,7 +37,7 @@ class SecondFragment : Fragment() {
                 Toast.makeText(requireActivity(), SET_WALLPAPERS_TEXT, Toast.LENGTH_SHORT).show()
                 WallpaperManager.getInstance(requireContext()).setBitmap(BitmapFactory.decodeStream(resources.assets.open(WALLPAPERS + "/${args.wallpaper}")))
             }
-            layout.closeThreeFingersTouch(requireActivity())
+            layout.closeThreeFingersTouch(requireActivity(), true)
         }
         super.onViewCreated(view, savedInstanceState)
     }

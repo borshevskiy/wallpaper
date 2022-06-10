@@ -32,7 +32,7 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mAdapter.wallPapers = resources.assets.list(WALLPAPERS)!!.toList()
-        binding.rvWallpapers.closeThreeFingersTouch(requireActivity())
+        binding.rvWallpapers.closeThreeFingersTouch(requireActivity(), false)
         super.onViewCreated(view, savedInstanceState)
     }
 

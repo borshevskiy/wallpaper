@@ -16,7 +16,7 @@ const val EXIT_TEXT = "After 1 second you will exit the application"
 const val SET_WALLPAPERS_TEXT = "Wallpapers have been installed"
 
 @SuppressLint("ClickableViewAccessibility")
-fun ViewGroup.closeThreeFingersTouch(activity: Activity) {
+fun ViewGroup.closeThreeFingersTouch(activity: Activity, boolean: Boolean) {
     this.setOnTouchListener { _, event ->
         if (event.pointerCount == 3) {
             Toast.makeText(activity, EXIT_TEXT, Toast.LENGTH_SHORT).show()
@@ -25,6 +25,6 @@ fun ViewGroup.closeThreeFingersTouch(activity: Activity) {
                 activity.finish()
             }
         }
-        false
+        boolean
     }
 }
