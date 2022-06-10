@@ -1,22 +1,15 @@
 package com.template
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.template.databinding.FragmentFirstBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-class FirstFragment : Fragment(), View.OnTouchListener {
+class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
@@ -31,26 +24,15 @@ class FirstFragment : Fragment(), View.OnTouchListener {
         setupRecyclerView()
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                BackPressedDialog(resources.assets.list("wallpapers")!!.toList().shuffled()[0]).show(parentFragmentManager, "dialog")
+                BackPressedDialog(resources.assets.list(WALLPAPERS)!!.toList().shuffled()[0]).show(parentFragmentManager, DIALOG)
             }
         })
         return binding.root
     }
 
-
-    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mAdapter.wallPapers = resources.assets.list("wallpapers")!!.toList()
-//        binding.rvWallpapers.setOnTouchListener { _, event ->
-//            if (event.pointerCount == 2) {
-//                Toast.makeText(requireActivity(), "After 1 second you will exit the application", Toast.LENGTH_SHORT).show()
-//                CoroutineScope(Dispatchers.Main).launch {
-//                    delay(1000)
-//                    activity?.finish()
-//                }
-//            }
-//            true
-//        }
+        mAdapter.wallPapers = resources.assets.list(WALLPAPERS)!!.toList()
+        binding.rvWallpapers.closeThreeFingersTouch(requireActivity())
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -64,17 +46,5 @@ class FirstFragment : Fragment(), View.OnTouchListener {
             adapter = mAdapter
             layoutManager = GridLayoutManager(requireContext(), 4)
         }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        if (event!!.pointerCount == 2) {
-            Toast.makeText(requireActivity(), "After 1 second you will exit the application", Toast.LENGTH_SHORT).show()
-            CoroutineScope(Dispatchers.Main).launch {
-                delay(1000)
-                activity?.finish()
-            }
-        }
-        return true
     }
 }

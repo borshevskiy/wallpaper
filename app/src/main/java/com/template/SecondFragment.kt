@@ -29,12 +29,13 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
-            imageName.text = args.wallpaper.substring(0,args.wallpaper.indexOf("."))
-            imageView.setImageDrawable(Drawable.createFromStream(resources.assets.open("wallpapers/${args.wallpaper}"), null)!!)
+            imageName.text = if (args.wallpaper.contains(NO_NAME)) getString(R.string.app_name) else args.wallpaper.substring(0,args.wallpaper.indexOf("."))
+            imageView.setImageDrawable(Drawable.createFromStream(resources.assets.open(WALLPAPERS + "/${args.wallpaper}"), null)!!)
             buttonSecond.setOnClickListener {
-                Toast.makeText(requireActivity(), "Wallpapers have been installed", Toast.LENGTH_SHORT).show()
-                WallpaperManager.getInstance(requireContext()).setBitmap(BitmapFactory.decodeStream(resources.assets.open("wallpapers/${args.wallpaper}")))
+                Toast.makeText(requireActivity(), SET_WALLPAPERS_TEXT, Toast.LENGTH_SHORT).show()
+                WallpaperManager.getInstance(requireContext()).setBitmap(BitmapFactory.decodeStream(resources.assets.open(WALLPAPERS + "/${args.wallpaper}")))
             }
+            layout.closeThreeFingersTouch(requireActivity())
         }
         super.onViewCreated(view, savedInstanceState)
     }
